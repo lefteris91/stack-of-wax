@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+
+<h1 class="myvinyl">My Vinyls</h1>
+
+<% for(let i=0; i<vinyls.length; i++){ %>
+  <div class="list-group">
+    <div class="vinyl">
+      <h2><%= vinyls[i].title %></h2>
+      <p class="genre">Music Genre: <%= vinyls[i].musicGenre %></p>
+      <p class="arist">Artist: <%= vinyls[i].artist %></p>
+      <form action="/vinyl/<%= vinyls[i]._id %>?_method=DELETE" method="POST" id="delete-form" class="d-flex justify-content-end">
+        <button class="btn btn-sm btn-danger" style="font-size: 16px; padding: 5px 10px; border-radius: 5px; background-color: #bd1212;"><i class="fas fa-trash-alt"></i></button>
+      </form>
+    </div>
+  </div>
+<% } %>
+
+
+<script>
+  const form = document.querySelector('#delete-form');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const url = form.action;
+    const method = 'DELETE';
+
+    fetch(url, { method })
+      .then(response => {
+        if (response.ok) {
+          // Vinyl was deleted successfully
+          window.location.reload();
+        } else {
+          throw new Error('Failed to delete vinyl');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        // Handle error here
+      });
+  });
+</script>
+<%- include('partials/footer') %>

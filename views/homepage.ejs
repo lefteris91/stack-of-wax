@@ -1,0 +1,60 @@
+<%- include('partials/home_header') %>
+    
+
+<div class="container py-md-5">
+  <div class="row align-items-center">
+    <div class="col-lg-7 py-3 py-md-5">
+      <h1 class="display-3">Welcome to V-Library</h1>
+      <p class="lead text-muted">Find your favorite Vinyl, share and exchange opinions about your favorite vinyl and discover vinyls you don't have on your list.</p>
+  <a href="/guest" class="btn btn-primary btn-sm fg">Continue as Guest</a>
+
+  
+    </div>
+    <div class="col-lg-5 pl-lg-5 pb-3 py-lg-5 fv">
+      <form action="/user/signup" method="POST" id="registration-form">
+        <div class="form-group">
+          <label for="username-register" class="text-muted mb-1"><small>Username</small></label>
+          <input name="username" id="username-register" class="form-control" type="text" placeholder="Username" autocomplete="off" />
+        </div>
+      
+        <div class="form-group">
+          <label for="email-register" class="text-muted mb-1"><small>Email</small></label>
+          <input name="email" id="email-register" class="form-control" type="text" placeholder="you@example.com" autocomplete="off" />
+        </div>
+      
+        <div class="form-group">
+          <label for="password-register" class="text-muted mb-1"><small>Password</small></label>
+          <input name="password" id="password-register" class="form-control" type="password" placeholder="Create a password" />
+        </div>
+      
+        <button type="submit" class="py-3 mt-4 btn btn-lg btn-success btn-block" id="submit-btn">Sign up for V-Library</button>
+      </form>
+      
+      <script>
+        // Get a reference to the form and submit button
+        const form = document.getElementById('registration-form');
+        const submitBtn = document.getElementById('submit-btn');
+      
+        // Add a click event listener to the submit button
+        submitBtn.addEventListener('click', (event) => {
+          // Prevent the form from submitting automatically
+          event.preventDefault();
+      
+          // Show a confirmation popup dialog
+          const confirmed = confirm('Are you sure you want to register?');
+          if (confirmed) {
+            // If the user confirms, submit the form
+            form.submit();
+          }
+        });
+      </script>
+      
+      
+    </div>
+  </div>
+</div>
+
+    
+<%- include('partials/footer') %>
+
+ 
