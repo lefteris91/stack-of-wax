@@ -42,20 +42,7 @@ router.post('/post',(req,res,next)=>{
     })
     vinyl.save()
 })
-// delete route
-// router.delete('/:vinylId',(req,res,next)=>{
-//     Vinyl.remove({_id: req.params.vinylId})
-//     .exec()
-//     .then(result=>{
-//         res.status(200).json({
-//             message: 'Vinyl Deleted'
-//         })
-//     })
-//     .catch(err =>{
-//         console.log(err);
-//         res.status(500).json({error:err});
-//     })
-// })
+
 // route for delete a vinyl from users list
 router.delete('/:vinylId',checkAuth, (req, res, next) => {
     req.session.user = req.user;
