@@ -12,49 +12,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="main.css" />
-	<script>
-	  // Wait for the DOM to load before executing the script
-	 document.addEventListener("DOMContentLoaded", function() {
-		// Select all the image elements with class "avatar-tiny"
-		var imgs = document.querySelectorAll("img.avatar-tiny");
-
-		// Loop over the image elements and change their src attribute
-		for (var i = 0; i < imgs.length; i++) {
-		  imgs[i].src = "images/vinyl.png";
-		}
-	  });
-	  </script>
-	  <script>
-	  // Wait for the DOM to load before executing the script
-	  document.addEventListener("DOMContentLoaded", function() {
-		// Select all the image elements with class "avatar-tiny"
-		var imgs = document.querySelectorAll("img.avatar-small");
-
-		// Loop over the image elements and change their src attribute
-		for (var i = 0; i < imgs.length; i++) {
-		  imgs[i].src = "images/place-holder-account.png";
-		}
-	  });
-	</script>
+	
   </head>
   <body>
     <body>
-      <% if (isLoggedIn) { %>
-        <header class="header-bar mb-3">
-          <div class="container d-flex flex-column flex-md-row align-items-center p-3">
-            <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/vinyl" class="text-white">Stack of wax</a></h4>
-            <div class="flex-row my-3 my-md-0">
-              <a href="#" class="text-white mr-2 header-search-icon" title="Search" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-search"></i></a>
-              <span class="text-white mr-2 header-chat-icon" title="Chat" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-comment"></i></span>
-              <a href="#" class="mr-2"><img title="My Profile" class="avatar-small" data-toggle="tooltip" data-placement="bottom" style="width: 32px; height: 32px; border-radius: 16px" src="#" /></a>
-              <a class="btn btn-sm btn-success mr-2" href="/user/vinylList">My vinyls</a>
-              <form action="/user/logout" method="GET" class="d-inline">
-                <button class="btn btn-sm btn-secondary">Sign Out</button>
-              </form>
-            </div>
-          </div>
-          </header>
-      <% } else { %>
+      
         <header class="header-bar mb-3">
           <div class="container d-flex flex-column flex-md-row align-items-center p-3">
             <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">Stack of wax</a></h4>
@@ -74,4 +36,4 @@
             </form>
           </div>
         </header>
-      <% } %>
+      
