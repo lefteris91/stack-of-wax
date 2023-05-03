@@ -50,14 +50,7 @@
             });
           </script>
         <% } %>
-        
-        
-        
-        
-      
-        
-    
-        <form action="/user/<%= vinyls[i]._id %>" method="POST" class="d-inline add">
+          <form action="/user/<%= vinyls[i]._id %>" method="POST" class="d-inline add">
           <% var vinylExists = false; %>
           <% for (var j = 0; j < user.vinyls.length; j++) { %>
             <% if (user.vinyls[j]._id.equals(vinyls[i]._id)) { %>
