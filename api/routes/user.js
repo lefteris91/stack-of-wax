@@ -1,3 +1,4 @@
+// dependancies and routes 
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -9,33 +10,32 @@ const checkAuth = require('../middleware/check-auth');
 const bodyParser =require('body-parser');
 
 
+// body-parser configuration
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 
-// route for signup 
-// diorthwsei ola ta routes prepei na metaferthoun se controllers
 // views declaration
-
 router.use(express.static('public'));
-router.get('/logged_in', (req, res) => {
-    res.render('logged_in');
-  });
-//
+
+
+//router for signup
 router.post('/signup',checkAuth, (req, res , next)=>{
   User.find({username:req.body.username})
   .exec()
   .then(user=>{
+
       if(user.length >= 1){
           return res.status(409).json({
               message:"User exists"
           });
       } else {
           bcrypt.hash(req.body.password, 10, (err,hash)=>{
+
               if(err){
                   return res.status(500).json({
                       error:err
-                  })
+                  });
               }else {
                   const user = new User({
                       _id: new mongoose.Types.ObjectId(),
@@ -52,14 +52,20 @@ router.post('/signup',checkAuth, (req, res , next)=>{
                       console.log(err);
                       res.status(500).json({
                           error:err
-                      })
-                  })
-                  
+                      });
+                  });   
               }
-          }) 
+          }); 
       }
   })
+  .catch(err =>{
+    console.log(err);
+    res.status(500).json({
+        error:err
+    });
+  });
 });
+
 
 // adding a vinyl in user vinyls array
 router.post('/:vinylId', checkAuth, (req, res, next) => {
@@ -68,15 +74,18 @@ router.post('/:vinylId', checkAuth, (req, res, next) => {
   
   Vinyl.findById(req.params.vinylId)
     .then((vinyl) => {
-      console.log(vinyl);
+      
       if (!vinyl) {
         return res.status(404).send({ message: 'Vinyl not found' });
       }
+
       const vinylExists = user.vinyls.some((v) => v._id.equals(vinyl._id));
+
       if (vinylExists) {
         const message = 'Vinyl already exists in user vinyls';
         return  message;
       }
+
       user.vinyls.push(vinyl);
       user.save();
       res.redirect('/user/vinylList');
@@ -89,11 +98,11 @@ router.post('/:vinylId', checkAuth, (req, res, next) => {
     });
 });
 
+
 // Show users vinyl list
 router.get('/vinylList', checkAuth, async (req, res, next) => {
   req.session.user = req.user;
   const user = req.session.user;
-
   const promises = user.vinyls.map((vinylId) =>
     Vinyl.findById(vinylId).exec()
   );
@@ -106,6 +115,7 @@ router.get('/vinylList', checkAuth, async (req, res, next) => {
     } else {
       res.render('vinyl_list', { vinyls: vinylsArray });
     }
+
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -114,8 +124,8 @@ router.get('/vinylList', checkAuth, async (req, res, next) => {
   }
 });
 
+
 // comment route
-  
 router.post('/comment/:vinylId', checkAuth, (req, res, next) => {
   const user = req.session.user;
   const commentText = req.body.comment;
@@ -124,6 +134,7 @@ router.post('/comment/:vinylId', checkAuth, (req, res, next) => {
   User.findById(user._id)
     .exec()
     .then(user => {
+
       if (!user) {
         res.status(404).send('User not found');
         return;
@@ -167,9 +178,11 @@ router.post('/comment/:vinylId', checkAuth, (req, res, next) => {
       res.status(500).send('Server error');
     });
 });
-// like route
 
+
+// like route
 router.post('/like/:vinylId', checkAuth, (req, res, next) => {
+  req.session.user = req.user;
   const user = req.user;
   const vinylId = req.params.vinylId;
 
@@ -179,6 +192,7 @@ router.post('/like/:vinylId', checkAuth, (req, res, next) => {
       if (!user) {
         res.status(404).send('User not found');
       } else {
+
         // Find the vinyl by ID and update its likes array
         Vinyl.findByIdAndUpdate(
           vinylId,
@@ -191,12 +205,13 @@ router.post('/like/:vinylId', checkAuth, (req, res, next) => {
         )
           .exec()
           .then(vinyl => {
+
             if (!vinyl) {
               res.status(404).send('Vinyl not found');
             } else {
-              
               res.redirect('/filters');
             }
+
           })
           .catch(err => {
             console.log(err);
@@ -213,13 +228,6 @@ router.post('/like/:vinylId', checkAuth, (req, res, next) => {
       });
     });
 });
-
-
-
-
-
-
-
 
 
 module.exports = router; 
