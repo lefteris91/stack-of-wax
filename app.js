@@ -13,7 +13,6 @@ const vinylRoute = require('./api/routes/vinyl');
 const filterRoute = require('./api/routes/filters');
 const bcrypt = require('bcrypt');
 const checkAuth = require('./api/middleware/check-auth');
-const guestRoute =require('./api/routes/guest');
 const commentLikeRoute = require('./api/routes/comment_like');
 
 
@@ -130,7 +129,6 @@ app.get('/user/logout', (req, res) => {
 app.use('/user', userRoute);
 app.use('/vinyl', vinylRoute);
 app.use('/filters', filterRoute);
-app.use('/guest', guestRoute);
 app.use('/list', commentLikeRoute);
 
 
