@@ -9,7 +9,6 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Vinyl'
     }]
-
-})
+});
 
 module.exports = mongoose.model('User', userSchema);
