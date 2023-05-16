@@ -13,5 +13,4 @@ const vinylSchema = mongoose.Schema({
     }]
 });
 
-
 module.exports = mongoose.model('Vinyl', vinylSchema);
