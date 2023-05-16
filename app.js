@@ -1,4 +1,4 @@
-// tools and file declared
+// dependancies and routes 
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -13,10 +13,11 @@ const vinylRoute = require('./api/routes/vinyl');
 const filterRoute = require('./api/routes/filters');
 const bcrypt = require('bcrypt');
 const checkAuth = require('./api/middleware/check-auth');
-const guestRoute =require('./api/routes/guest')
+const guestRoute =require('./api/routes/guest');
 const commentLikeRoute = require('./api/routes/comment_like');
 
 
+// database connection
 mongoose.connect('mongodb+srv://stackofwax:'+ process.env.MONGO_ATLAS_PASSWORD +'@my-stack-of-wax.u0aspko.mongodb.net/test', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -27,6 +28,8 @@ mongoose.connect('mongodb+srv://stackofwax:'+ process.env.MONGO_ATLAS_PASSWORD +
   .catch((error) => {
     console.log('Database connection error:', error);
   });
+
+
 // Configure session middleware
 app.use(session({
   secret: 'your-secret-key',
@@ -34,23 +37,26 @@ app.use(session({
   saveUninitialized: false
 }));
 
+
 // Configure Passport.js middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // views
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-
 app.get('/',checkAuth, (req, res) => {
   res.render('homepage');
 });
+
 
 // middle-w
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/uploads', express.static('uploads'));
+
 
 // cors errors 
 app.use((req,res,next)=>{
@@ -64,7 +70,6 @@ app.use((req,res,next)=>{
     }
     next();
 });
-
 
 
 // Define Passport.js local authentication strategy
@@ -90,6 +95,7 @@ passport.use(new LocalStrategy({
     .catch(err => done(err));
 }));
 
+
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
   done(null, user._id);
@@ -101,6 +107,7 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+
 // Set up login route
 app.post('/user/login', passport.authenticate('local'),checkAuth, (req, res) => {
   console.log('Request received at /user/login');
@@ -110,6 +117,7 @@ app.post('/user/login', passport.authenticate('local'),checkAuth, (req, res) => 
   res.redirect('/filters');
 });
 
+
 // Set up logout route
 app.get('/user/logout', (req, res) => {
   req.logout(function(err) {
@@ -117,12 +125,14 @@ app.get('/user/logout', (req, res) => {
     return res.redirect('/');
 });
 
+
 // Define route handlers
 app.use('/user', userRoute);
 app.use('/vinyl', vinylRoute);
 app.use('/filters', filterRoute);
 app.use('/guest', guestRoute);
 app.use('/list', commentLikeRoute);
+
 
 // handling errors
 app.use((req,res,next)=>{
