@@ -1,5 +1,6 @@
 <%- include('partials/header') %>
 
+
 <h1 class="myvinyl">My Vinyls</h1>
 
 <% for(let i=0; i<vinyls.length; i++){ %>
@@ -14,7 +15,6 @@
     </div>
   </div>
 <% } %>
-
 
 <script>
   const form = document.querySelector('#delete-form');
@@ -40,4 +40,6 @@
       });
   });
 </script>
+
+
 <%- include('partials/footer') %>

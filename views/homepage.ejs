@@ -7,8 +7,6 @@
       <h1 class="display-3">Welcome to V-Library</h1>
       <p class="lead text-muted">Find your favorite Vinyl, share and exchange opinions about your favorite vinyl and discover vinyls you don't have on your list.</p>
   <a href="/filters" class="btn btn-primary btn-sm fg">Continue as Guest</a>
-
-  
     </div>
     <div class="col-lg-5 pl-lg-5 pb-3 py-lg-5 fv">
       <form action="/user/signup" method="POST" id="registration-form">
@@ -26,10 +24,10 @@
           <label for="password-register" class="text-muted mb-1"><small>Password</small></label>
           <input name="password" id="password-register" class="form-control" type="password" placeholder="Create a password" />
         </div>
-      
         <button type="submit" class="py-3 mt-4 btn btn-lg btn-success btn-block" id="submit-btn">Sign up for V-Library</button>
       </form>
       
+
       <script>
         // Get a reference to the form and submit button
         const form = document.getElementById('registration-form');
@@ -55,6 +53,4 @@
 </div>
 
     
-<%- include('partials/footer') %>
-
- 
+<%- include('partials/footer') %> 

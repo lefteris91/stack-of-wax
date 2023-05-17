@@ -1,5 +1,6 @@
 <%- include('partials/header') %>
 
+
     <div class="container py-3 container--narrow">
       <form class="form-inline my-2 my-lg-0" action="/filters" method="get">
         <input class="form-control mr-sm-2" type="text" name="musicGenre" placeholder="Music Genre" aria-label="Search">
@@ -7,17 +8,13 @@
         <button class="btn btn-outline-success my-2 my-sm-0"  type="submit" >Search</button>
       </form>
     </div>
-    
-    
-    
-    
     <div class="list-group">
+
       <% for(var i=0; i<vinyls.length; i++) { %>
         <div class="vinyl"><h2><%= vinyls[i].title %></h2>
           <i class="fas fa-compact-disc vinyl-icon" style="font-size: 40px;text-align: center;position: relative;left: 46%;"></i>
         <p class="genre">Music Genre: <%= vinyls[i].musicGenre %></p>
         <p class="arist">Artist: <%= vinyls[i].artist %></p>
-
         <form action="/user/comment/<%= vinyls[i]._id %>" method="POST" onsubmit="addComment(event)">
           <textarea name="comment"></textarea>
           <button style="font-size: 13px;" type="submit">Add Comment</button>
@@ -37,9 +34,11 @@
                   </button>
                 </div>
                 <div class="modal-body">
+
                   <% for(var j=0; j<vinyls[i].comments.length; j++) { %>
                     <p>Comment <%= j+1 %>: <%= vinyls[i].comments[j].comment %></p>
                   <% } %>
+
                 </div>
               </div>
             </div>
@@ -50,18 +49,24 @@
             });
           </script>
         <% } %>
+
           <form action="/user/<%= vinyls[i]._id %>" method="POST" class="d-inline add">
+
           <% var vinylExists = false; %>
+
           <% for (var j = 0; j < user.vinyls.length; j++) { %>
             <% if (user.vinyls[j]._id.equals(vinyls[i]._id)) { %>
               <% vinylExists = true; %>
             <% } %>
           <% } %>
+
           <button class="btn btn-sm btn-secondary" onclick="return <% if (vinylExists) { %>confirm('Vinyl already exists in user vinyls')<% } else { %>true<% } %> && submit();">+ Add to List</button>
         </form>
         
         <form action="/user/like/<%= vinyls[i]._id %>" method="POST" class="d-inline like">
+
           <% var likedByUser = vinyls[i].likes.includes(user._id.toString()); %>
+
           <button class="btn btn-sm btn-<%= likedByUser ? 'danger' : 'secondary' %>" <%= likedByUser ? 'disabled' : '' %>>
             <%= likedByUser ? 'Liked' : 'Like' %> <%= vinyls[i].likes.length %> 
           </button>
@@ -79,7 +84,6 @@
         const formData = new FormData(form);
         const comment = formData.get('comment');
         const vinylId = form.action.split('/').pop(); // get the vinyl ID from the form action URL
-      
         const requestData = {
           comment,
           vinylId,
@@ -108,6 +112,5 @@
       }
       </script>
       
-    
-  
+     
 <%- include('partials/footer') %>
