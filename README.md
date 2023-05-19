@@ -28,5 +28,5 @@
   <li>Node.js</li>
   <li>Express</li>
   <li>Mongoose</li>
-  <li>Database:Mongpdb Atlas</li>
+  <li>Database:Mongodb Atlas</li>
 </ul>
